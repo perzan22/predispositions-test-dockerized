@@ -1,0 +1,25 @@
+<mat-card appearance="outlined" *ngIf="questions.length > currentQuestionIndex; else endTemplate">
+    <mat-card-header>
+        <mat-card-title>{{ questions[currentQuestionIndex].tresc }}</mat-card-title>
+        <mat-card-subtitle>{{ questions[currentQuestionIndex].instrukcja }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <section class="answers-panel">
+            <div class="answer" *ngFor="let answer of answers; let i = index" (click)="nextQuestion(answer)">
+                <h1>{{ getLetter(i) }}</h1><p>{{ answer.tresc }}</p>
+            </div>
+        </section>
+        
+    </mat-card-content>
+    <mat-card-actions>
+    </mat-card-actions>
+    <mat-progress-bar mode="determinate" [value]="currentQuestionIndex * 100 / questions.length" class="custom-progress-bar"></mat-progress-bar>
+</mat-card>
+
+<ng-template #endTemplate>
+    <mat-card>
+        <h1>Koniec</h1>
+        <mat-progress-bar mode="determinate" [value]="currentQuestionIndex * 100 / questions.length" class="custom-progress-bar"></mat-progress-bar>
+    </mat-card>
+</ng-template>

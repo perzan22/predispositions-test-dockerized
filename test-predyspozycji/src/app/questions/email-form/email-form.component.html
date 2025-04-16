@@ -1,0 +1,41 @@
+<mat-card appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>
+            Ostatni krok!
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <h3>Aby poznać wynik wypełnij formularz</h3>
+        <form [formGroup]="form" (submit)="getResults()">
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Imię</mat-label>
+                <input matInput placeholder="np. Jan" formControlName="imie">
+                <mat-error *ngIf="getErrorMessage('imie')">{{ getErrorMessage('imie') }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Nazwisko</mat-label>
+                <input matInput placeholder="np. Nowak" formControlName="nazwisko">
+                <mat-error *ngIf="getErrorMessage('nazwisko')">{{ getErrorMessage('nazwisko') }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" placeholder="np. jannowak@poczta.pl" formControlName="email">
+                <mat-error *ngIf="getErrorMessage('email')">{{ getErrorMessage('email') }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Miasto</mat-label>
+                <input matInput placeholder="np. Gdynia" formControlName="miasto">
+                <mat-error *ngIf="getErrorMessage('miasto')">{{ getErrorMessage('miasto') }}</mat-error>
+            </mat-form-field>
+            <section class="buttons">
+                <section class="checkboxes">
+                    <mat-checkbox class="custom-checkbox" formControlName="zgoda-przetwarzania">*Przeczytałem i akceptuję <a href="/zgoda-przetwarzania" target="_blank">warunki przetwarzania danych osobowych</a> oraz pozostałe zgody.</mat-checkbox>
+                    <mat-error *ngIf="checkBox1Error" class="checkBoxError">{{ getErrorMessage('zgoda-przetwarzania') }}</mat-error>
+                    <mat-checkbox class="custom-checkbox" formControlName="zgoda-marketing">*Wyrażam dobrowolną zgodę na otrzymywanie drogą elektroniczną materiałów marketingowo-informacyjnych od Akademii Marynarki Wojennej im. Bohaterów Westerplatte, ul. Śmidowicza 69, 81-127 Gdynia, na wskazany w formularzu adres poczty elektornicznej.</mat-checkbox>
+                    <mat-error *ngIf="checkBox2Error" class="checkBoxError">{{ getErrorMessage('zgoda-marketing') }}</mat-error>
+                </section>
+                <button mat-flat-button type="submit" color="accent" class="result-btn">Poznaj wynik!</button>
+            </section>
+        </form>
+    </mat-card-content>
+</mat-card>

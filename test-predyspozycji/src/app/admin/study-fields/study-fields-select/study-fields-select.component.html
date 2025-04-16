@@ -1,0 +1,12 @@
+<div class="container">
+    <h1>Kierunki studiów</h1>
+    <div class="study-fields">
+        <div *ngFor="let studyField of studyFields; let i = index;" class="study-field">
+            <div class="study-field-content">{{ i+1 }}. {{ studyField.nazwa }}</div>
+            <div class="study-field-buttons"><mat-icon matTooltip="Usuń kierunek" (click)="deleteStudyField(studyField.id_kierunku)">delete</mat-icon><mat-icon matTooltip="Edytuj kierunek" [routerLink]="['/admin/kierunki/form', studyField.id_kierunku]" aria-hidden="false">edit</mat-icon></div>
+        </div>
+        <div matTooltip="Dodaj nowy kierunek" class="study-field-new" [routerLink]="['/admin/kierunki/form']"><mat-icon>add</mat-icon></div>
+    </div>
+      
+</div>
+

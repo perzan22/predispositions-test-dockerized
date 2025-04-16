@@ -1,0 +1,7 @@
+<section class="body">
+  <app-header *ngIf="!isAdminPage()"></app-header>
+  <main [ngClass]="getLayoutClass()">
+    <router-outlet></router-outlet>
+  </main>
+  <app-footer *ngIf="!isAdminPage()"></app-footer>
+</section>

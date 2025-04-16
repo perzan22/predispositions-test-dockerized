@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="study-field-selected">
+        <form [formGroup]="form" (submit)="onSubmit()">
+            <h1 *ngIf="mode == 'edit'">Edytuj kierunek</h1>
+            <h1 *ngIf="mode == 'create'">Dodaj kierunek</h1>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Nazwa kierunku</mat-label>
+                <input matInput formControlName="nazwa">
+                <mat-error *ngIf="getErrorMessage('nazwa')">{{ getErrorMessage('nazwa') }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Wydział</mat-label>
+                <input matInput formControlName="wydzial">
+                <mat-error *ngIf="getErrorMessage('wydzial')">{{ getErrorMessage('wydzial') }}</mat-error>
+            </mat-form-field>
+            <h2>Środowisko kierunku</h2>
+            <p>Naciśnij na miejsce, w którym znajduje się środowisko ososbowości danego kierunku wewnątrz heksagonu</p>
+            <app-hexagon [fieldOfStudyPoint]="fieldOfStudyPoint" (fieldOfStudyPointChange)="onPointUpdate($event)" *ngIf="dataLoaded"></app-hexagon>
+            <button mat-raised-button color="accent" type="submit">
+                {{ mode == 'edit' ? 'Zatwierdź zmiany' : 'Dodaj kierunek' }}
+            </button>
+        </form>
+    </div>
+</div>
+

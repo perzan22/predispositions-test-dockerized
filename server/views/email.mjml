@@ -1,0 +1,47 @@
+<mjml>
+    <mj-head>
+        <mj-preview>Wiadomość z uczelni AMW</mj-preview>
+    </mj-head>
+    <mj-body background-color="white">
+        <mj-section>
+            <mj-column>
+                <mj-text color="#131936" font-size="24px" font-weight="bold" font-family="Roboto" align="center" line-height="25px">Cześć, {{imie}} {{nazwisko}}!</mj-text>
+            </mj-column>
+        </mj-section>      
+        <mj-section>
+            <mj-column>
+                <mj-text font-size="18px" font-family="Roboto" align="center" line-height="25px">Po analizie wyników diagnoza jest jasna. Kierunkami, do których najlepiej pasujesz są:</mj-text>
+            </mj-column>
+        </mj-section> 
+        <mj-section>
+            <mj-column background-color="#63cbe6"  width="40%" border-radius="30px">
+                <mj-text color="white" font-size="20px" font-weight="bold" align="center" padding="10px 20px" font-family="Roboto">{{kierunek}}</mj-text>
+            </mj-column>
+        </mj-section>
+        <mj-section>
+            <mj-column>
+                <mj-text font-size="18px" font-family="Roboto" align="center" line-height="25px">Bazując na twoich odpowiedziach w
+                 teście to właśnie te kierunki na naszej uczelni są dla Ciebie idealne. Wybierz te kierunki
+                  na Akdemii Marynarki Wojennej, a poczujesz satysfakcję z nauki. Wybór tych kierunków może ułatwić
+                   Twoją drogę w celu sukcesu zawodowego. Zapraszamy do zapoznania się z ofertą
+                 powyższych kierunków, a także sprawdzenia całej oferty edukacyjnej naszej uczelni. Jesteś już zdecydowany? Nie czekaj, tylko przejdź na naszą stronę rekrutacji.</mj-text>
+            </mj-column>
+        </mj-section>
+        <mj-section>
+            <mj-column>
+                <mj-button background-color="#EBB42E" font-family="Roboto" href="https://www.amw.gdynia.pl/index.php/kandydat/studia-cywilne">CYWILNA OFERTA AMW</mj-button>
+            </mj-column>
+            <mj-column>
+                <mj-button background-color="#EBB42E" font-family="Roboto" href="https://www.amw.gdynia.pl/index.php/pl/kandydat/studia-wojskowe">WOJSKOWA OFERTA AMW</mj-button>
+            </mj-column>
+            <mj-column>
+                <mj-button background-color="#EBB42E" font-family="Roboto" href="https://www.amw.gdynia.pl/index.php/pl/kandydat/rejestracja-logowanie">PRZEJDŹ DO REKRUTACJI</mj-button>
+            </mj-column>
+        </mj-section>
+        <mj-section full-width="full-width">
+            <mj-column background-color="#131936">
+                <mj-image width="500px" src="https://www.dropbox.com/scl/fi/ugoim6ik1y1zgpi0luwbu/amw2.png?rlkey=yyk3rss831xsr5fvzlbbtpjwq&st=wbowti3s&raw=1" href="https://www.amw.gdynia.pl/index.php" />
+            </mj-column>
+        </mj-section>
+    </mj-body>
+</mjml>

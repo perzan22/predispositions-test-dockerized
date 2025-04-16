@@ -1,0 +1,25 @@
+<mat-card appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>Zaloguj się do panelu administracyjnego</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <form [formGroup]="form" (submit)="onLogin()">
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Login</mat-label>
+                <input matInput formControlName="login">
+                <mat-error *ngIf="getErrorMessage('login')">{{ getErrorMessage('login') }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Hasło</mat-label>
+                <input type='password' matInput formControlName="password">
+                <mat-error *ngIf="getErrorMessage('password')">{{ getErrorMessage('password') }}</mat-error>
+            </mat-form-field>
+            <button mat-raised-button type="submit" color="accent">Zaloguj się</button>
+        </form>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+        <a href="/">Strona główna</a>
+    </mat-card-actions>
+</mat-card>

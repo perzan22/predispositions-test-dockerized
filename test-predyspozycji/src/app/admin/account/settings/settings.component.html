@@ -1,0 +1,40 @@
+<div class="container">
+    <section>
+        <h1>Zmień hasło</h1>
+        <form [formGroup]="formPass" (submit)="onSubmitPass()">
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Aktualne hasło</mat-label>
+                <input matInput formControlName="aktualne" type="password">
+                <mat-error *ngIf="getErrorMessagePass('aktualne')">{{ getErrorMessagePass('aktualne') }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Nowe hasło</mat-label>
+                <input matInput formControlName="nowe" type="password">
+                <mat-error *ngIf="getErrorMessagePass('nowe')">{{ getErrorMessagePass('nowe') }}</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">POTWIERDŹ ZMIANY</button>
+        </form>
+    </section>
+    <mat-divider></mat-divider>
+    <section>
+        <h1>Dodaj nowego administratora</h1>
+        <form [formGroup]="formAdd" (submit)="onSubmitAdd()">
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Login</mat-label>
+                <input matInput formControlName="login">
+                <mat-error *ngIf="getErrorMessageAdd('login')">{{ getErrorMessageAdd('login') }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always" type="password">
+                <mat-label>Hasło</mat-label>
+                <input matInput formControlName="haslo" type="password">
+                <mat-error *ngIf="getErrorMessageAdd('haslo')">{{ getErrorMessageAdd('haslo') }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always" type="password">
+                <mat-label>Potwierdź hasło</mat-label>
+                <input matInput formControlName="hasloPotwierdz" type="password">
+                <mat-error *ngIf="getErrorMessageAdd('hasloPotwierdz')">{{ getErrorMessageAdd('hasloPotwierdz') }}</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">DODAJ KONTO</button>
+        </form>
+    </section>
+</div>

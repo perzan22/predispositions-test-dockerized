@@ -1,0 +1,56 @@
+@import "../../../../styles/mixins"
+    
+mat-card
+    position: relative
+    top: 50px
+    left: 50%
+    transform: translateX(-50%)
+
+    width: 40%
+    font-family: "Open Sans", serif
+    @include respond-to(mobile)
+        width: 80%
+    @include respond-to(tablet)
+        width: 70%
+    @include respond-to(desktop)
+        width: 60%
+    
+    
+    
+
+    mat-card-header
+        display: flex
+        justify-content: center
+        padding: 20px 0
+
+        mat-card-title
+            font-size: 25px
+            text-align: center
+            @include respond-to(mobile)
+                font-size: 18px
+            @include respond-to(tablet)
+                font-size: 20px   
+            
+
+    mat-card-content
+        height: 100%
+        display: flex
+        flex-direction: column
+        position: relative
+        overflow: hidden
+
+        form
+            display: flex
+            flex-direction: column
+            justify-content: center
+            margin: 20px
+        
+
+    mat-card-actions
+        display: flex
+        justify-content: end
+        gap: 10px
+
+mat-form-field
+    margin-bottom: 10px
+

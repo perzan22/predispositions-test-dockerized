@@ -1,0 +1,33 @@
+@import "../../../../styles/mixins"
+
+.container
+    height: 100%
+
+    h1, h2, p
+        text-align: center
+
+    h1
+        @include respond-to(mobile)
+            font-size: 20px
+
+    p
+        font-size: 11px
+        margin: 0
+        padding: 0
+        color: grey
+
+    form
+        display: flex
+        flex-direction: column
+
+        button
+            align-self: center
+
+.study-field-selected
+    display: flex
+    flex-direction: column
+    justify-content: center
+
+    app-hexagon
+        align-self: center
+            

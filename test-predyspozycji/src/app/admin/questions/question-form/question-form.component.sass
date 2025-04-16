@@ -1,0 +1,60 @@
+@import "../../../../styles/mixins"
+    
+.container
+    height: 100%
+
+    h1
+        text-align: center
+        @include respond-to(mobile)
+            font-size: 20px
+        
+
+    form
+        display: flex
+        flex-direction: column
+
+        button
+            align-self: center
+            margin-bottom: 15px
+
+        .answersh
+            margin-top: 15px
+
+    .answers
+
+        .icons
+            display: flex
+            gap: 5px
+
+        .answers-edit
+            display: flex
+            justify-content: space-between
+            align-items: center
+
+            mat-icon 
+                color: #EBB42E
+
+            mat-icon:hover
+                cursor: pointer
+
+            .answer-field
+                width: 45%
+
+        .answer-new
+            padding: 20px
+            margin: 10px 0
+            border: 2px solid grey
+            display: flex
+            justify-content: center
+            color: #EBB42E
+        
+        .answer-new:hover
+            background-color: #e4eaf0
+            cursor: pointer
+
+mat-form-field
+    margin-bottom: 10px
+
+    @include respond-to(mobile)
+        mat-hint
+            font-size: 8px

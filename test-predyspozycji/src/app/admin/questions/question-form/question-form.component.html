@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="question-selected">
+        <form [formGroup]="form" (submit)="onSubmit()">
+            <h1 *ngIf="mode == 'edit'">Edytuj pytanie</h1>
+            <h1 *ngIf="mode == 'create'">Dodaj pytanie</h1>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Treść pytania</mat-label>
+                <input matInput formControlName="tresc_pytania">
+                <mat-error *ngIf="getErrorMessage('tresc_pytania')">{{ getErrorMessage('tresc_pytania') }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Instrukcja do pytania</mat-label>
+                <input matInput formControlName="instrukcja">
+                <mat-error *ngIf="getErrorMessage('instrukcja')">{{ getErrorMessage('instrukcja') }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Typ pytania</mat-label>
+                <mat-select formControlName="typ_pytania">
+                    @for (type of questionTypes; track type) {
+                        <mat-option [value]="type.id_typu">{{ type.nazwa_typu }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <button mat-raised-button *ngIf="mode == 'edit'" type="submit" color="accent">Zatwierdź zmiany w pytaniu</button>
+            <mat-divider></mat-divider>
+            <h1 *ngIf="mode == 'edit'" class="answersh">Edytuj odpowiedzi</h1>
+            <h1 *ngIf="mode == 'create'" class="answersh">Dodaj odpowiedzi</h1>
+            <div formArrayName="odpowiedzi" class="answers">
+                <div *ngFor="let answer of odpowiedzi.controls; let i = index" [formGroupName]="i" class="answers-edit">
+                    <mat-form-field appearance="outline" floatLabel="always" class="answer-field">
+                        <mat-label>Treść odpowiedzi</mat-label>
+                        <input matInput formControlName="tresc_odpowiedzi">
+                        <mat-error *ngIf="getErrorMessage('tresc_odpowiedzi')">{{ getErrorMessage('tresc_odpowiedzi') }}</mat-error>
+                    </mat-form-field>
+                    <div class="icons"><mat-icon matTooltip="Zatwierdź zmiany" (click)="editAnswer(answer.getRawValue())">check</mat-icon><mat-icon matTooltip="Usuń odpowiedź" (click)="onDeleteAnswer(answer.getRawValue().id_odpowiedzi)">delete</mat-icon></div>
+                    <mat-form-field appearance="outline" floatLabel="always" class="answer-field">
+                        <mat-label>Wartość</mat-label>
+                        <input type="number" matInput formControlName="wartosc" min="0" max="1" step="0.05">
+                        <mat-hint>Wpisz wartość od 0 do 1</mat-hint>
+                    </mat-form-field>
+                </div>
+                <div matTooltip="Dodaj nową odpowiedź" class="answer-new" (click)="addAnswer()"><mat-icon>add</mat-icon></div>
+            </div>
+            <button mat-raised-button *ngIf="mode == 'create'" type="submit" color="accent">Dodaj pytanie</button>
+        </form>
+    </div>
+</div>

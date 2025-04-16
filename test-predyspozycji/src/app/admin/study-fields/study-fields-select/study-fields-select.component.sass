@@ -1,0 +1,59 @@
+@import "../../../../styles/mixins"
+    
+.container
+    height: 100%
+
+    h1
+        text-align: center
+        @include respond-to(mobile)
+            font-size: 20px
+
+    .study-fields
+        display: flex
+        flex-direction: column
+        justify-content: start
+        height: 100%
+        font-size: 20px
+        @include respond-to(mobile)
+            font-size: 15px
+        @include respond-to(tablet)
+            font-size: 18px
+
+        .study-field
+            padding: 20px
+            margin: 10px 0
+            border: 2px solid grey
+            display: flex
+            @include respond-to(mobile)
+                padding: 10px
+                margin: 5px 0
+            .study-field-content
+                width: 50%
+                @include respond-to(mobile)
+                    width: 80%
+            .study-field-buttons
+                width: 50%
+                display: flex
+                justify-content: end
+                color: #EBB42E
+                @include respond-to(mobile)
+                    width: 20%
+                    justify-content: space-between
+                
+                mat-icon:hover
+                    cursor: pointer
+
+        .study-field:hover
+            background-color: #e4eaf0
+
+        .study-field-new
+            padding: 20px
+            margin: 10px 0
+            border: 2px solid grey
+            display: flex
+            justify-content: center
+            color: #EBB42E
+
+        .study-field-new:hover
+            background-color: #e4eaf0
+            cursor: pointer

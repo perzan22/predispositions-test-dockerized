@@ -1,0 +1,67 @@
+@import "../../../../styles/mixins"
+    
+.container
+    height: 100%
+    margin-right: 5px
+
+    h1
+        text-align: center
+        @include respond-to(mobile)
+            font-size: 20px
+        
+
+    .questions
+        display: flex
+        flex-direction: column
+        justify-content: start
+        height: 100%
+        font-size: 20px
+        @include respond-to(mobile)
+            font-size: 15px
+        @include respond-to(tablet)
+            font-size: 18px
+        
+        
+
+        .question
+            padding: 20px
+            margin: 10px 0
+            border: 2px solid grey
+            display: flex
+            @include respond-to(mobile)
+                padding: 10px
+                margin: 5px 0
+            
+
+            .question-content
+                width: 50%
+                @include respond-to(mobile)
+                    width: 80%
+            
+            .question-buttons
+                width: 50%
+                display: flex
+                justify-content: end
+                color: #EBB42E
+                @include respond-to(mobile)
+                    width: 20%
+                    justify-content: space-between
+                    
+                
+                mat-icon:hover
+                    cursor: pointer
+
+        .question:hover
+            background-color: #e4eaf0
+
+        .question-new
+            padding: 20px
+            margin: 10px 0
+            border: 2px solid grey
+            display: flex
+            justify-content: center
+            color: #EBB42E
+
+        .question-new:hover
+            background-color: #e4eaf0
+            cursor: pointer

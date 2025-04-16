@@ -1,0 +1,76 @@
+@import "../../../styles/mixins"
+
+mat-card
+    display: flex
+    align-items: center
+    margin: auto
+    width: 80vw
+    font-family: "Open Sans", serif
+
+mat-card-header
+    padding: 40px
+    text-align: center
+
+mat-card-title
+    font-size: 30px
+    @include respond-to(mobile)
+        font-size: 24px
+    
+
+mat-card-subtitle
+    font-size: 20px
+    @include respond-to(mobile)
+        font-size: 18px
+    
+
+mat-card-content
+    width: 60%
+    @include respond-to(mobile)
+        width: 90%
+    @include respond-to(tablet)
+        width: 80%
+    
+    
+
+
+mat-card-actions
+    padding: 40px
+
+.answer
+    border: 2px solid #131936
+    border-radius: 20px
+    padding: 20px
+    margin: 5px
+    display: flex
+    align-items: center
+    justify-content: start
+    width: 100%
+    color: #131936
+    transition: color 0.3s, background 0.4s ease
+
+    h1
+        margin: 0 20px
+        font-size: 30px
+
+    
+    p
+        margin: 0
+        font-size: 20px
+
+.answer:hover
+    background: #131936
+    color: white
+    cursor: pointer
+
+.answers-panel
+    display: flex
+    flex-direction: column
+    align-items: center
+    margin: 20px 20px
+    
+.mat-mdc-progress-bar
+    --mdc-linear-progress-active-indicator-color: #EBB42E
+    --mdc-linear-progress-track-color: #131936
+    
+
+    

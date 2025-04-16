@@ -1,0 +1,11 @@
+<div class="container">
+    <h1>Pytania i odpowiedzi</h1>
+    <div class="questions">
+        <div *ngFor="let question of questions; let i = index;" class="question">
+            <div class="question-content">{{ i+1 }}. {{ question.tresc }}</div>
+            <div class="question-buttons"><mat-icon matTooltip="Usuń pytanie" (click)="onDeleteQuestion(question.id_pytania)">delete</mat-icon><mat-icon matTooltip="Edytuj pytanie" [routerLink]="['/admin/pytania/form', question.id_pytania]" aria-hidden="false">edit</mat-icon></div>
+        </div>
+        <div matTooltip="Dodaj nowe pytanie" class="question-new" [routerLink]="['/admin/pytania/form']"><mat-icon>add</mat-icon></div>
+    </div>
+      
+</div>
