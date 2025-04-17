@@ -87,9 +87,9 @@ export class EmailFormComponent implements OnInit {
                 this.studyFieldsService.getStudyField(this.kierunek).subscribe({
                   next: studyField => {
                     this.mailService.sendMail(this.form.value.imie, this.form.value.nazwisko, studyField.nazwa, this.form.value.email).subscribe({    
-                      next: () => {
-                        const dialogRef = this.dialog.open(DialogComponent, { data: { message: response.message } })
-
+                      next: mailResponse => {
+                        // const dialogRef = this.dialog.open(DialogComponent, { data: { message: response.message } })
+                        const dialogRef = this.dialog.open(DialogComponent, { data: { message: mailResponse.message, url: mailResponse.url } })
                         dialogRef.afterClosed().subscribe({
                           next: () => {
                             localStorage.clear();

@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>Wynik</h1>
 <div mat-dialog-content>
-    <p>{{ data.message }}</p>
+    <p>{{ data.message }}</p><br>
+    <p>To jest testowa wersja aplikacji. <a [href]="data.url">Kliknij aby zobaczyć maila.</a></p>
 </div>
 <div mat-dialog-actions align="end">
     <button mat-raised-button (click)="onCloseClick()" mat-dialog-close color="accent">OK</button>

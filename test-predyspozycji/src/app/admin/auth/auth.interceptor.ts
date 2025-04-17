@@ -18,7 +18,15 @@ export class AuthInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 401) {
                     this.authService.logout();
+                    this.snackBar.open('Nieprawidłowe dane logowania', "OK", { duration: 3000 });
+                }
+                if (error.status === 403) {
+                    this.authService.logout();
                     this.snackBar.open('Sesja wygasła, zaloguj się ponownie!', "OK", { duration: 3000 });
+                }
+                if (error.status === 404) {
+                    this.authService.logout();
+                    this.snackBar.open('Nie znaleziono użytkownika!', "OK", { duration: 3000 });
                 }
                 return throwError(() => new Error(error.error));
             })

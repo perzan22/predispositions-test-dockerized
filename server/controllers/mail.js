@@ -1,7 +1,10 @@
-const mail = require("../smtp");
+const getTestTransporter = require("../smtp");
+// const mail = require("../smtp")
 const mjml = require("mjml");
 const fs = require("fs");
 require('dotenv').config();
+const nodemailer = require('nodemailer');
+
 
 exports.sendMail = async (req, res, next) => {
 
@@ -20,19 +23,50 @@ exports.sendMail = async (req, res, next) => {
     // Konwersja pliku mjml na html
     const htmlOutput = mjml(mjmlWithData).html;
 
-    // Atrynuty potrzebne do wysłania maila
+    ///////////////////////////////////////////////////
+    // Wysłanie maila za pomocą serwera SMTP uczelni //
+    ///////////////////////////////////////////////////
+
+    // Atrybuty potrzebne do wysłania maila
+    // const mailOptions = {
+    //     from: process.env.SMTP_USER,
+    //     to: email,
+    //     subject: `Twój wybrany kierunek!`,
+    //     html: htmlOutput
+    // };
+
+    // try {
+    //     // Funkcja wysyłająca maila
+    //     await mail.sendMail(mailOptions);
+    //     res.status(200).json({ message: 'E-mail wysłany!' });
+    // } catch (error) {
+    //     res.status(500).json({ message: 'Błąd podczas wysłania e-maila.', error });
+    // }
+
+    //////////////////////////////
+    // Wysłanie testowego maila //
+    //////////////////////////////
+
+    const transporter = await getTestTransporter();
+
+    console.log(transporter)
     const mailOptions = {
-        from: process.env.SMTP_USER,
+        from: '"Test User" <test@example.com>',
         to: email,
         subject: `Twój wybrany kierunek!`,
         html: htmlOutput
     };
 
     try {
-        // Funkcja wysyłająca maila
-        await mail.sendMail(mailOptions);
-        res.status(200).json({ message: 'E-mail wysłany!' });
+        const info = await transporter.sendMail(mailOptions);
+        //console.log('Message sent:', info.messageId);
+        //console.log('Preview URL:', nodemailer.getTestMessageUrl(info));
+        res.status(200).json({ 
+            message: 'E-mail wysłany!',
+            url: nodemailer.getTestMessageUrl(info)
+         });
     } catch (error) {
+        console.error('Error sending email:', error);
         res.status(500).json({ message: 'Błąd podczas wysłania e-maila.', error });
     }
 }

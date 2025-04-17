@@ -14,7 +14,7 @@ export class MailService {
 
   // Funkcja wystyłająca żądanie POST do serwera w celu wysłania maila do kandydata
   sendMail(imie: string, nazwisko: string, kierunek: string, email: string) {
-    return this.http.post<{ message: string }>('http://localhost:3000/api/mail/', { imie, nazwisko, kierunek, email });
+    return this.http.post<{ message: string, url: string }>('http://localhost:3000/api/mail/', { imie, nazwisko, kierunek, email });
   }
 
 }

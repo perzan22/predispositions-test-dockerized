@@ -4,7 +4,7 @@ import { CandidatesService } from '../../../candidates/candidates.service';
 import { Subscription } from 'rxjs';
 
 import * as xlsx from 'xlsx';
-import { saveAs } from 'file-saver'
+import { saveAs } from 'file-saver-es'
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

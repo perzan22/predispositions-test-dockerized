@@ -15,6 +15,6 @@ module.exports = (req, res, next) => {
         next();
     } catch (error) {
         // Jeśli błąd to nie pozwala przejść do funkcji kontrolera
-        res.status(401).json({ message: `${error.name}, zaloguj się ponownie!` });
+        res.status(403).json({ message: `${error.name}, zaloguj się ponownie!` });
     }
 }
