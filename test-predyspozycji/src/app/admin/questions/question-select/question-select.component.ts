@@ -1,9 +1,17 @@
+////////////////////////////////////
+// QUESTION SELECT LIST COMPONENT //
+////////////////////////////////////
+
+// imports
+
 import { Component } from '@angular/core';
 import { QuestionService } from '../../../questions/questions.service';
 import { Subscription } from 'rxjs';
 import { Question } from '../../../questions/question.model';
 import { Answer } from '../../../questions/answer.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+// component declaration
 
 @Component({
   selector: 'app-question-select',
@@ -21,6 +29,7 @@ export class QuestionSelectComponent {
 
   constructor(private questionService: QuestionService, private snackBar: MatSnackBar) {}
 
+  // get existing questions on component initialization
 
   ngOnInit(): void {
     this.questionService.getQuestions();
@@ -33,6 +42,10 @@ export class QuestionSelectComponent {
       }
     })
   }
+
+  // on delete question send data to service
+  // and remove question from the list
+  // so html file doesn show it
 
   onDeleteQuestion(id_pytania: number) {
     this.questionService.deleteQuestion(id_pytania).subscribe({

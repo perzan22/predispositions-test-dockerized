@@ -1,25 +1,31 @@
+// method returns field of study which is the
+// closest on the hexagonal model
+// to candidate personality type
+
 function findClosestField(personalityPoint, fields) {
     
-    // Ustawienie początkowych wartości na nieskończoność i null
     let smallestDistance = Infinity;
     let bestMatch = null;
 
-    // Sprawdzenie całej tabeli kierunki
+    // check every study field
+
     fields.forEach(field => {
-        // Wzór obliczający dystans punktu od punktu
+
+        // calculate distance from study filed to personality type
+
         const distance = Math.sqrt(
             Math.pow(personalityPoint.x - field.x, 2) +
             Math.pow(personalityPoint.y - field.y, 2)
         );
 
-        // Jeśli obliczony dystans jest mniejszy od najmniejszego to staje się 
-        // nowym najmniejszym dystansem
+        // if calculated distance is smaller than the previous smallest on
+        // then this is now best match
+
         if (distance < smallestDistance) {
             smallestDistance = distance;
             bestMatch = field
         }
     });
-    // Zwrócone jest id kierunku o najmniejszym dystansie od punktu osobowości
     return bestMatch.id_kierunku
 };
 

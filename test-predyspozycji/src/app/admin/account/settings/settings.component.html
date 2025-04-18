@@ -1,4 +1,9 @@
+<!-- HTML FILE FOR ADDING NEW ADMINS AND CHANGE LOG PASSWORD -->
+
 <div class="container">
+
+    <!-- form for changing password -->
+
     <section>
         <h1>Zmień hasło</h1>
         <form [formGroup]="formPass" (submit)="onSubmitPass()">
@@ -15,7 +20,11 @@
             <button mat-raised-button color="primary" type="submit">POTWIERDŹ ZMIANY</button>
         </form>
     </section>
+
     <mat-divider></mat-divider>
+
+    <!-- form for adding new admin -->
+
     <section>
         <h1>Dodaj nowego administratora</h1>
         <form [formGroup]="formAdd" (submit)="onSubmitAdd()">
@@ -37,4 +46,5 @@
             <button mat-raised-button color="primary" type="submit">DODAJ KONTO</button>
         </form>
     </section>
+
 </div>

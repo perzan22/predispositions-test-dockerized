@@ -1,6 +1,11 @@
+# docker-compose file creates containers of:
+# database - postgres image, initialize with dump.sql file and set environments
+# server - from dockerfile, sets environments
+# angular app - from dockerfile
+
 version: "3.9"
 services:
-  db: 
+  db:                     # database container
     image: postgres:17
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -11,7 +16,7 @@ services:
     ports:
      - "5432:5432"
 
-  server:
+  server:                # server container
     build: ./server
     environment:
       DB_HOST: ${DB_HOST}
@@ -24,7 +29,7 @@ services:
     depends_on:
      - db
 
-  test-predyspozycji:
+  test-predyspozycji:     # angular app container
     build: ./test-predyspozycji
     environment:
       TOKEN: SECRET_PHRASE

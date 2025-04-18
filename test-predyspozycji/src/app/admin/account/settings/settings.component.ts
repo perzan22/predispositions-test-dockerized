@@ -1,7 +1,15 @@
+//////////////////////////////////////
+// ADMIN ACCOUNT SETTINGS COMPONENT //
+//////////////////////////////////////
+
+// imports
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+// component declaration
 
 @Component({
   selector: 'app-settings',
@@ -14,6 +22,8 @@ export class SettingsComponent implements OnInit {
   formAdd!: FormGroup;
 
   constructor(private authService: AuthService, private snackBar: MatSnackBar) {}
+
+  // generate forms on component initialization
 
   ngOnInit(): void {
     this.formPass = new FormGroup({
@@ -37,6 +47,8 @@ export class SettingsComponent implements OnInit {
     })
   }
 
+  // on submit passwordChange form send form fields values to service
+
   onSubmitPass() {
     if (this.formPass.invalid) {
       return;
@@ -44,6 +56,8 @@ export class SettingsComponent implements OnInit {
 
     this.authService.changePassword(this.formPass.value.aktualne, this.formPass.value.nowe)
   }
+
+  // on submit addNewAdmin form send form fields values to servic
 
   onSubmitAdd() {
     if (this.formAdd.invalid) {
@@ -60,6 +74,8 @@ export class SettingsComponent implements OnInit {
     
   }
 
+  // function set custom error messages to changePassword form
+
   getErrorMessagePass(controlName: string): string {
     const control = this.formPass.get(controlName);
     if (!control) return '';
@@ -70,6 +86,8 @@ export class SettingsComponent implements OnInit {
 
     return '';
   }
+
+  // function set custom error messages to addNewAdmin form
 
   getErrorMessageAdd(controlName: string): string {
     const control = this.formAdd.get(controlName);

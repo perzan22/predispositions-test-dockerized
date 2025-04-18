@@ -1,6 +1,11 @@
+<!-- HTML FILE FOR ADDING NEW QUESTIONS AND UPDATING EXISTING ONES -->
+
 <div class="container">
     <div class="question-selected">
         <form [formGroup]="form" (submit)="onSubmit()">
+
+            <!-- form part for question data -->
+
             <h1 *ngIf="mode == 'edit'">Edytuj pytanie</h1>
             <h1 *ngIf="mode == 'create'">Dodaj pytanie</h1>
             <mat-form-field appearance="outline" floatLabel="always">
@@ -22,7 +27,11 @@
                 </mat-select>
             </mat-form-field>
             <button mat-raised-button *ngIf="mode == 'edit'" type="submit" color="accent">Zatwierdź zmiany w pytaniu</button>
+
             <mat-divider></mat-divider>
+
+            <!-- form part for answers data -->
+
             <h1 *ngIf="mode == 'edit'" class="answersh">Edytuj odpowiedzi</h1>
             <h1 *ngIf="mode == 'create'" class="answersh">Dodaj odpowiedzi</h1>
             <div formArrayName="odpowiedzi" class="answers">
@@ -41,6 +50,7 @@
                 </div>
                 <div matTooltip="Dodaj nową odpowiedź" class="answer-new" (click)="addAnswer()"><mat-icon>add</mat-icon></div>
             </div>
+
             <button mat-raised-button *ngIf="mode == 'create'" type="submit" color="accent">Dodaj pytanie</button>
         </form>
     </div>

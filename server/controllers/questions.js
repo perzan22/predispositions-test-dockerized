@@ -1,5 +1,13 @@
+//////////////////////////////////////
+// CONTROLLER HANDLES HTTP REQUESTS //
+// REFERS TO SENDING TEST QUESTIONS //
+//////////////////////////////////////
+
+// import database
+
 const db = require('../db')
 
+// method returns all questions from database
 
 exports.getQuestions = async (req, res, next) => {
     const query = `SELECT * FROM pytanie ORDER BY id_pytania`;
@@ -13,6 +21,8 @@ exports.getQuestions = async (req, res, next) => {
         res.status(404).json({ message: 'Nie znaleziono pytań' })
     }
 }
+
+// method returns specific question based on id
 
 exports.getQuestion = async (req, res, next) => {
     const id_pytania = req.query.id_pytania
@@ -31,6 +41,8 @@ exports.getQuestion = async (req, res, next) => {
         res.status(404).json({ message: 'Nie znaleziono pytania' })
     }
 }
+
+// method used for updating question in database
 
 exports.editQuestion = async (req, res, next) => {
     const question = {
@@ -56,36 +68,37 @@ exports.editQuestion = async (req, res, next) => {
     }
 }
 
-// Funkcja POST dodające nowe pytanie do bazy danych
+// method adds new question to database
+
 exports.addQuestion = async (req, res, next) => {
 
-    // Dane pobrane z ciała body żądania
     const { tresc, instrukcja, typ_pytania } = req.body;
 
-    // Wykonanie zapytania SQL dodająca nowy rekord do tabeli pytanie
     const query = `INSERT INTO pytanie (tresc, instrukcja, id_typu, ilosc_odpowiedzi) VALUES ($1, $2, $3, $4) RETURNING id_pytania`
     const values = [tresc, instrukcja, typ_pytania, 0]
 
-    // Try catch sprawdza wystąpienie błędów
     try {
-        // Jeśli polecenie się udało to zwraca id nowego pytania
         const result = await db.query(query, values);
         res.status(201).json({
             id_pytania: result.rows[0].id_pytania
         })
 
     } catch (error) {
-        // W przypadku braku powodzenia zwraca informacje o błedzie
         console.error(error)
         res.status(500).json({ error: 'Błąd podczas dodawania pytania.' });
     }
 }
+
+// method deletes question from database
 
 exports.deleteQuestion = async (req, res, next) => {
 
     const questionID = req.query.id_pytania
 
     const transaction = await db.connect()
+
+    // transaction is used because before deleteing question
+    // it is needed to delete all answers connected to this question
 
     try {
 
@@ -120,6 +133,8 @@ exports.deleteQuestion = async (req, res, next) => {
     }
 
 }
+
+// method returns all types of questions
 
 exports.getQuestionTypes = async (req, res, next) => {
     const query = `SELECT * FROM typ_pytania`;

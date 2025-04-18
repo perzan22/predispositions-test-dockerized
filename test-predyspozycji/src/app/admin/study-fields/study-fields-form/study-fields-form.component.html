@@ -1,3 +1,5 @@
+<!-- HTML FILE FOR FIELDS OF STUDY CREATION AND UPDATING FORM -->
+
 <div class="container">
     <div class="study-field-selected">
         <form [formGroup]="form" (submit)="onSubmit()">
@@ -15,6 +17,9 @@
             </mat-form-field>
             <h2>Środowisko kierunku</h2>
             <p>Naciśnij na miejsce, w którym znajduje się środowisko ososbowości danego kierunku wewnątrz heksagonu</p>
+
+            <!-- insert hexagonal personality type model to set field of study position on it by clicking -->
+
             <app-hexagon [fieldOfStudyPoint]="fieldOfStudyPoint" (fieldOfStudyPointChange)="onPointUpdate($event)" *ngIf="dataLoaded"></app-hexagon>
             <button mat-raised-button color="accent" type="submit">
                 {{ mode == 'edit' ? 'Zatwierdź zmiany' : 'Dodaj kierunek' }}

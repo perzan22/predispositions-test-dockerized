@@ -1,3 +1,9 @@
+//////////////////////////
+// EMAIL FORM COMPONENT //
+//////////////////////////
+
+// imports
+
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../questions.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -11,6 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog/dialog.component';
 import { Answer } from '../answer.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+// component declaration
 
 @Component({
   selector: 'app-email-form',
@@ -31,6 +39,8 @@ export class EmailFormComponent implements OnInit {
     private studyFieldsService: StudyFieldsService, private mailService: MailService, private dialog: MatDialog, 
     private questionService: QuestionService, private snackBar: MatSnackBar) {}
 
+
+  // generate form on component initialization
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -55,7 +65,12 @@ export class EmailFormComponent implements OnInit {
     })
   }
 
+  // method send candidatec data to service
+  // and send email with result
+
   getResults() {
+
+    // check if consents are checked
 
     if (this.form.invalid) {
       if (this.form.get('zgoda-przetwarzania')?.hasError('required')) {
@@ -73,21 +88,37 @@ export class EmailFormComponent implements OnInit {
     this.checkBox2Error = false;
     this.candidateAnswers = this.questionService.answersToResult;
 
+    // send candidate data to service
+
     this.candidateService.createCandidate(this.form.value.imie, this.form.value.nazwisko, this.form.value.email, this.form.value.miasto).subscribe({
       next: response => {
         const id_kandydata = response.id_kandydata;
+
+        // calculate test result
+
         this.resultService.getResults(this.candidateAnswers).subscribe({
           next: response => {
 
             this.kierunek = response.kierunek;
             this.wynik = response.wynik
 
+            // send result data to service
+
             this.resultService.addResult(id_kandydata, this.kierunek, this.wynik).subscribe({
               next: response => {
+
+                // get calculated field of study information
+
                 this.studyFieldsService.getStudyField(this.kierunek).subscribe({
                   next: studyField => {
+
+                    // send email info to service
+
                     this.mailService.sendMail(this.form.value.imie, this.form.value.nazwisko, studyField.nazwa, this.form.value.email).subscribe({    
                       next: mailResponse => {
+
+                        // open dialog after sending email
+
                         // const dialogRef = this.dialog.open(DialogComponent, { data: { message: response.message } })
                         const dialogRef = this.dialog.open(DialogComponent, { data: { message: mailResponse.message, url: mailResponse.url } })
                         dialogRef.afterClosed().subscribe({
@@ -129,6 +160,8 @@ export class EmailFormComponent implements OnInit {
 
     
   }
+
+  // function set custom error messages to contact form
 
   getErrorMessage(controlName: string): string {
     const control = this.form.get(controlName);

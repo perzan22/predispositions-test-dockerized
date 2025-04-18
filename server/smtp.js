@@ -1,9 +1,15 @@
+/////////////////////////////
+// SMTP CONFIGURATION FILE // 
+/////////////////////////////
+
+// import nodemailer to handle smtp requests
+
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-////////////////////////////////
-//  Konfiguracja serwera SMTP //
-////////////////////////////////
+///////////////////////////////
+// PROPER SMTP SERVER CONFIG //
+///////////////////////////////
 
 // const mail = nodemailer.createTransport({
 //     host: process.env.SMTP_SERVER,
@@ -15,16 +21,19 @@ require('dotenv').config();
 //     }
 // });
 
-/////////////////////////////////
-// Konfiguracja testowego SMTP //
-/////////////////////////////////
+/////////////////////////////
+// TEST SMTP SERVER CONFIG //
+/////////////////////////////
 
 const getTestTransporter = async () => {
     try {
-        // Tworzenie testowego konta SMTP
+
+        // create test smtp account
+
         const account = await nodemailer.createTestAccount();
 
-        // Tworzenie transportera na podstawie danych konta
+        // create transport to config smtp
+
         const transporter = nodemailer.createTransport({
             host: account.smtp.host,
             port: account.smtp.port,
@@ -38,10 +47,8 @@ const getTestTransporter = async () => {
         return transporter;
     } catch (error) {
         console.error('Error creating test SMTP account:', error);
-        throw error;  // Wyrzuć błąd, aby obsłużyć go w wywołującym kodzie
+        throw error; 
     }
 };
 
-
-// Eksport połączenia do serwera SMTP
 module.exports = getTestTransporter;

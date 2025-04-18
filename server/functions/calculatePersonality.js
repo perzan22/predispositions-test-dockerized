@@ -1,6 +1,9 @@
+// function calculates personality type of candidate
+// based on his answers
+
 function calculatePersonality(answersArray, hexagonArray) {
 
-    // Grupowanie odpowiedzi według etykiety
+    // group answers by personality type label
     const grouped = [];
 
     answersArray.forEach(answer => {
@@ -17,14 +20,18 @@ function calculatePersonality(answersArray, hexagonArray) {
         }
     });
 
-    // Obliczanie średniej wartości dla każdej grupy
+    // calculate average of every group
+
     grouped.forEach(group => group.sum /= group.count);
 
-    // Suma średnich wszystkich odpowiedzi
+    // sum of averages from every group
+
     const sum = grouped.reduce((acc, g) => acc + g.sum, 0);
 
 
-    // Obliczenie finalnego punktu typu osobowości
+    // calculate final personality type of candidate
+    // and set it on the hexagonal model
+
     let finalPoint = { x: 0, y: 0 };
     grouped.forEach(g => {
         const point = hexagonArray.find(p => p.label === g.label);
@@ -34,7 +41,8 @@ function calculatePersonality(answersArray, hexagonArray) {
         }
     })
 
-    // Normalizacja punktu
+    // point normalization
+    
     if (sum !== 0) {
         finalPoint.x /= sum;
         finalPoint.y /= sum;

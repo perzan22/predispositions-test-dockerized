@@ -1,5 +1,13 @@
+//////////////////////////
+// MAIN PANEL COMPONENT //
+//////////////////////////
+
+// imports
+
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+
+// component declaration
 
 @Component({
   selector: 'app-main-panel',
@@ -10,6 +18,8 @@ export class MainPanelComponent {
 
 
   constructor(private authService: AuthService) {}
+
+  // on logout method
 
   onLogout() {
     this.authService.logout()

@@ -1,3 +1,9 @@
+/////////////////////////////
+// ANGULAR MATERIAL MODULE //
+/////////////////////////////
+
+// import angular material components used in project from 
+
 import { NgModule } from "@angular/core";
 
 import { MatButtonModule } from "@angular/material/button"
@@ -14,6 +20,9 @@ import { MatTableModule } from '@angular/material/table'
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 
+
+// module declare material components so it can be used
+// anywhere in the project
 
 @NgModule({
     exports: [

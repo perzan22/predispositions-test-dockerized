@@ -1,3 +1,10 @@
+////////////////
+// APP MODULE //
+////////////////
+
+// import app components, modules
+// providers services and methods
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,7 +34,8 @@ import { HexagonComponent } from './hexagon/hexagon/hexagon.component';
 import { DialogComponent } from './dialog/dialog/dialog.component';
 import { RodoComponent } from './rodo/rodo/rodo.component';
 
-// Deklaracja komponentów
+// module declaration declare components used in app
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +56,9 @@ import { RodoComponent } from './rodo/rodo/rodo.component';
     DialogComponent,
     RodoComponent
   ],
-  // Import potrzebnych modułów
+
+  // import necessary modules
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -57,13 +67,17 @@ import { RodoComponent } from './rodo/rodo/rodo.component';
     ReactiveFormsModule,
     BrowserAnimationsModule
   ],
-  // Zależności, z których można korzystać we wszystkich komponentach
+
+  // provide external dependencies which are used in app
+
   providers: [
     provideAnimationsAsync(),
     CookieService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
-  // Określenie komponentu do uruchomienia na start
+
+  // set application start point to app component
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

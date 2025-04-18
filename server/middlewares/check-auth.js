@@ -1,20 +1,32 @@
+//////////////////////////////////////////
+// MIDDLEWARE TO CHECK IF HTTP REQUEST  //
+// HAS PROPER AUTHORIZATION TOKEN       //
+//////////////////////////////////////////
+
+// imports
+
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-// Middleware weryfikuje poprawność tokena JWT
 module.exports = (req, res, next) => {
     try {
-        // Token uzyskuje się przez nagłówek żądania HTTP
+
+        // token is returned from request headers
+
         const token = req.headers.authorization.split('Bearer ')[1];
 
-        // Weryfikacja tokena
+        // verify the token
+
         const decodedToken = jwt.verify(token, process.env.TOKEN);
         req.userData = { login: decodedToken.login };
 
-        // Przejście do kolejnego middleware lub funkcji kontrolera
+        // if token is correct then go to next middleware
+
         next();
     } catch (error) {
-        // Jeśli błąd to nie pozwala przejść do funkcji kontrolera
+        
+        // if token is not correct then request isnt handled
+
         res.status(403).json({ message: `${error.name}, zaloguj się ponownie!` });
     }
 }

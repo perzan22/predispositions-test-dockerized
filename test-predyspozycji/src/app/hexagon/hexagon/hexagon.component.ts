@@ -1,5 +1,13 @@
+///////////////////////
+// HEXAGON COMPONENT //
+///////////////////////
+
+// imports
+
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import * as d3 from 'd3';
+
+// component declaration
 
 @Component({
   selector: 'app-hexagon',
@@ -8,13 +16,23 @@ import * as d3 from 'd3';
 })
 export class HexagonComponent {
 
+  // set hexagon starting data
+
   private svg: any;
   private width = 300;
   private height = 300;
   finalPoint: any = { x: 0, y: 0 };
   fieldOfStudyFit = { x: 0, y: 0, label: '' }
+
+  // input variable get point from parent component
+
   @Input() fieldOfStudyPoint!: { x: number, y: number };
+
+  // output variable set point clicked to parent component
+
   @Output() fieldOfStudyPointChange = new EventEmitter<{ x: number, y: number }>()
+
+  // set points of hexagon corners
 
   private points = [
     {x: 1, y: 0, label: 'A'}, 
@@ -31,10 +49,13 @@ export class HexagonComponent {
 
   constructor(private el: ElementRef) {}
 
+  // initialize model after component initialization
+
   ngAfterViewInit(): void {
     this.svg = d3.select(this.el.nativeElement.querySelector('svg'));
     
-    // Rysowanie sześciokąta
+    // draw hexagon model
+
     this.svg.append('polygon')
       .attr('points', this.hexagonPoints.map(p => p.join(',')).join(' '))
       .attr('fill', 'none')
@@ -68,6 +89,8 @@ export class HexagonComponent {
     this.setupClickListener();
   }
 
+  // draw static point for tests
+
   private drawPoints(data: { x: number, y: number, label: string }[]) {
     data.forEach(d => {
       this.svg.append('circle')
@@ -84,24 +107,33 @@ export class HexagonComponent {
     });
   }
 
+  // method listens to clicking on the model
 
   private setupClickListener(): void {
+
+    // set point based on click position
+
     this.svg.on("click", (event: MouseEvent) => {
       const [clickX, clickY] = d3.pointer(event, this.svg.node());
       const x = clickX / 100 - 1.5;
-      const y = -clickY / 100 + 1.5; // Odwracamy Y, bo SVG ma 0 na górze
+      const y = -clickY / 100 + 1.5; // revers y value because svg has 0 at the top
+
+      // remove previously clicked point
 
       if (this.selectedPoint) {
         this.selectedPoint.remove();
       }
 
-      // Rysowanie nowego punktu
+      // draw new point on hexagon
+
       this.selectedPoint = this.svg
         .append("circle")
         .attr("cx", clickX)
         .attr("cy", clickY)
         .attr("r", 3)
         .attr("fill", "#131936");
+
+      // emit point asynchronously to parent component
 
       this.fieldOfStudyPointChange.emit({ x: x, y: y });
     });

@@ -1,4 +1,9 @@
+<!-- HTML FILE FOR TEST SOLVING -->
+
 <mat-card appearance="outlined" *ngIf="questions.length > currentQuestionIndex; else endTemplate">
+
+    <!-- question and answers -->
+
     <mat-card-header>
         <mat-card-title>{{ questions[currentQuestionIndex].tresc }}</mat-card-title>
         <mat-card-subtitle>{{ questions[currentQuestionIndex].instrukcja }}</mat-card-subtitle>
@@ -10,10 +15,12 @@
                 <h1>{{ getLetter(i) }}</h1><p>{{ answer.tresc }}</p>
             </div>
         </section>
-        
     </mat-card-content>
     <mat-card-actions>
     </mat-card-actions>
+
+    <!-- test progress bar -->
+
     <mat-progress-bar mode="determinate" [value]="currentQuestionIndex * 100 / questions.length" class="custom-progress-bar"></mat-progress-bar>
 </mat-card>
 

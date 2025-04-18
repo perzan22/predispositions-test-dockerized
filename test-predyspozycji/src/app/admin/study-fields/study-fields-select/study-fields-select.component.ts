@@ -1,8 +1,16 @@
+////////////////////////////////////
+// FIELDS OF STUDY LIST COMPONENT //
+////////////////////////////////////
+
+// imports
+
 import { Component } from '@angular/core';
 import { StudyField } from '../../../study-fields/study-field.model';
 import { filter, Subscription } from 'rxjs';
 import { StudyFieldsService } from '../../../study-fields/study-fields.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+// component declaration
 
 @Component({
   selector: 'app-study-fields-select',
@@ -16,6 +24,7 @@ export class StudyFieldsSelectComponent {
 
   constructor(private studyFieldsService: StudyFieldsService, private snackBar: MatSnackBar) {}
 
+  // get fields of study on component initialization
 
   ngOnInit(): void {
     this.studyFieldsService.getStudyFields();
@@ -28,6 +37,10 @@ export class StudyFieldsSelectComponent {
       }
     })
   }
+
+  // on delete button send study field data to service
+  // and remove it from the list
+  // so html file doesnt show it
   
   deleteStudyField(studyFieldID: number) {
     this.studyFieldsService.deleteStudyField(studyFieldID).subscribe({

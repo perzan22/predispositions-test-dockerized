@@ -1,8 +1,15 @@
+/////////////////////////////
+// CREATE NODE HTTP SERVER // 
+/////////////////////////////
+
+// imports
+
 const app = require("./app");
 const debug = require("debug")("node-angular");
 const http = require("http");
 
-// Funkcja normalizująca port
+// normalize port
+
 const normalizePort = val => {
   var port = parseInt(val, 10);
 
@@ -19,7 +26,8 @@ const normalizePort = val => {
   return false;
 };
 
-// Funkcja zwracająca informacje o błędach
+// method to handle server errors
+
 const onError = error => {
   if (error.syscall !== "listen") {
     throw error;
@@ -39,21 +47,23 @@ const onError = error => {
   }
 };
 
-// Funkcja obsłlugjąca nasłuchiwanie na danym porcie
+// function for listening on port
+
 const onListening = () => {
   const bind = typeof port === "string" ? "pipe " + port : "port " + port;
   debug("Listening on " + bind);
 };
 
-// Normalizacja portu
+// set port in api interface
+
 const port = normalizePort(process.env.PORT || "3000");
-// Ustawienie portu w interfejsie API
 app.set("port", port);
 
-// Utworzenie serwera odbierajacego żądania HTTP
+// create server for handling HTTP requests
 const server = http.createServer(app);
 
-// Nasłuchiwanie na porcie ustawionym przez funkcję normalizePort
+// start server on specific port
+
 server.on("error", onError);
 server.on("listening", onListening);
 server.listen(port);

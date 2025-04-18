@@ -1,3 +1,9 @@
+/////////////////////////////
+// QUESTION FORM COMPONENT //
+/////////////////////////////
+
+// imports
+
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -7,6 +13,8 @@ import { Answer } from '../../../questions/answer.model';
 import { Subscription } from 'rxjs';
 import { QuestionType } from '../../../questions/questionType.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+// component declaration
 
 @Component({
   selector: 'app-question-form',
@@ -26,11 +34,19 @@ export class QuestionFormComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private questionService: QuestionService, private router: Router, private snackBar: MatSnackBar) {}
 
+  // getters
+
   get odpowiedzi(): FormArray {
     return this.form.get('odpowiedzi') as FormArray;
   }
 
+  // on component initialization
+  // generate question form
+  // define if it is creating new question or editing existing one
+
   ngOnInit(): void {
+
+    // generate form
 
     this.form = new FormGroup({
       "tresc_pytania": new FormControl(null, {
@@ -45,6 +61,8 @@ export class QuestionFormComponent implements OnInit {
       "odpowiedzi": new FormArray([])
     })
 
+    // get question types
+
     this.questionService.getQuestionTypes();
     this.questionTypeSubs = this.questionService.getQuestionTypesUpdateListener().subscribe({
       next: questionTypeData => {
@@ -55,7 +73,13 @@ export class QuestionFormComponent implements OnInit {
       }
     })
 
+    // check mode of form
+
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
+
+      // if mode is edit then insert existing values to form fields of question
+      // and answers
+
       if (paramMap.has('id')) {
         this.mode = 'edit';
         this.questionID = paramMap.get('id')
@@ -102,6 +126,9 @@ export class QuestionFormComponent implements OnInit {
     })
   }
 
+  // function add new question form group to form
+  // html file shows blank form fields for it
+
   addAnswer() {
     const answerGroup = new FormGroup({
       "id_odpowiedzi": new FormControl(null),
@@ -111,9 +138,13 @@ export class QuestionFormComponent implements OnInit {
     this.odpowiedzi.push(answerGroup)
   }
 
+  // method to log answers form group
+
   sprawdz() {
     console.log(this.odpowiedzi.controls)
   }
+
+  // on submit edit question or add new based on mode
 
   onSubmit() {
     if (this.mode == 'edit') {
@@ -122,6 +153,8 @@ export class QuestionFormComponent implements OnInit {
       this.addQuestion()
     }
   }
+
+  // send edited question data to service
 
   editQuestion() {
     if (this.form.invalid) {
@@ -132,6 +165,8 @@ export class QuestionFormComponent implements OnInit {
       this.questionService.editQuestion(this.form.value.tresc_pytania, this.form.value.instrukcja, this.odpowiedzi.length, this.form.value.typ_pytania ,+this.questionID);
     }
   }
+
+  // send edited answer data to service
 
   editAnswer(answer: any) {
     if (this.form.invalid) {
@@ -144,6 +179,8 @@ export class QuestionFormComponent implements OnInit {
       this.questionService.addNewAnswer(answer.tresc_odpowiedzi, answer.wartosc, +this.questionID)
     }
   }
+
+  // on delete answer send data to service and remove one from formgroup so html file doesnt show it
 
   onDeleteAnswer(answerID: number) {
     if (this.questionID && answerID) {
@@ -161,6 +198,9 @@ export class QuestionFormComponent implements OnInit {
       this.odpowiedzi.removeAt(this.odpowiedzi.length - 1);
     }
   }
+
+  // method send new question data to service
+  // and new answers data to service
 
   addQuestion() {
 
@@ -187,6 +227,8 @@ export class QuestionFormComponent implements OnInit {
     }
     
   }
+
+  // function set custom error messages to question form
 
   getErrorMessage(controlName: string): string {
     const control = this.form.get(controlName);

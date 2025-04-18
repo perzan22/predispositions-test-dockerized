@@ -1,3 +1,6 @@
+// candidate model represents candidate
+// relation in the database
+
 export interface Candidate {
     id_kandydata: number,
     imie: string,

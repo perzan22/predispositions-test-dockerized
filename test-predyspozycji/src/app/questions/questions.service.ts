@@ -1,3 +1,9 @@
+//////////////////////
+// QUESTION SERVICE //
+//////////////////////
+
+// imports
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
@@ -6,6 +12,8 @@ import { Answer } from './answer.model';
 import { Router } from '@angular/router';
 import { QuestionType } from './questionType.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+// set service as injectable to inject class to app components 
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +34,8 @@ export class QuestionService {
 
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
 
-  // Funkcja zwracająca pytania z bazy danych
+  // method sends GET request to fetch questions
+
   getQuestions() {
     // Żądanie GET
     this.http.get<{ questions: any, message: string }>(`http://localhost:3000/api/questions/`).subscribe({
@@ -42,9 +51,13 @@ export class QuestionService {
     })
   }
 
+  // method sends GET request to fetch specific question
+
   getQuestion(id_pytania: number) {
     return this.http.get<{ id_pytania: number, tresc: string, instrukcja: string, ilosc_odpowiedzi: number, id_typu: number }>(`${this.questionApiUrl}/edit?id_pytania=${id_pytania}`)
   }
+
+  // method sends GET request to fetch answers
 
   getAllAnswers() {
     this.http.get<{ answers: any, message: string }>(`${this.answerApiUrl}/all/`).subscribe({
@@ -58,6 +71,8 @@ export class QuestionService {
     })
   }
 
+  // method sends GET request to fetch answers related to specific question
+
   getAnswers(id_pytania: number) {
     this.http.get<{ answers: any, message: string }>(`${this.answerApiUrl}?id_pytania=${id_pytania}`).subscribe({
       next: fetchedAnswers => {
@@ -67,9 +82,13 @@ export class QuestionService {
     })
   }
 
+  // clear chosen answers array
+
   resetAnswers() {
     this.answersToResult = [];
   }
+
+  // method sends PATCH request to edit question
 
   editQuestion(tresc: string, instrukcja: string, ilosc_odpowiedzi: number, id_typu: number, questionID: number) {
     const questionData = {
@@ -91,6 +110,8 @@ export class QuestionService {
     })
   }
 
+  // method sends PATCH request to edit answer
+
   editAnswer(tresc: string, wartosc_punktowa: number, id_pytania: number, answerID: number) {
     const answerData = {
       tresc: tresc,
@@ -108,6 +129,8 @@ export class QuestionService {
       }
     })
   }
+
+  // method sends POST request to add new answer
 
   addNewAnswer(tresc: string, wartosc_punktowa: number, id_pytania: number) {
     const answerData = {
@@ -127,9 +150,13 @@ export class QuestionService {
       })
   }
 
+  // method sends DELETE request to delete answer
+
   deleteAnswer(id_pytania: number, id_odpowiedzi: number) {
     return this.http.delete<{ answer: Answer, message: string }>(`${this.answerApiUrl}?id_odpowiedzi=${id_odpowiedzi}&id_pytania=${id_pytania}`);
   }
+
+  // method sends POST request to add new question
 
   addQuestion(tresc: string, instrukcja: string, typ_pytania: number) {
     const questionData = {
@@ -140,6 +167,8 @@ export class QuestionService {
 
     return this.http.post<{ id_pytania: number }>(`${this.questionApiUrl}`, questionData)
   }
+
+  // method sends GET request to fetch all question types
 
   getQuestionTypes() {
     this.http.get<{ questionTypes: QuestionType[], message: string }>(`${ this.questionApiUrl}/type`).subscribe({
@@ -153,9 +182,13 @@ export class QuestionService {
     })
   }
 
+  // method sends DELETE request to delete question
+
   deleteQuestion(id_pytania: number) {
     return this.http.delete<{ question: Question, message: string }>(`${ this.questionApiUrl}?id_pytania=${id_pytania}`);
   }
+
+  // methods returns Subject type variables as Observable
 
   getQuestionUpdateListener() {
     return this.questionSubs.asObservable()
@@ -169,6 +202,7 @@ export class QuestionService {
     return this.questionTypesSubs.asObservable()
   }
 
+  // answers setter
   
   public set setAnswersToResult(v : Answer[]) {
     this.answersToResult = v;

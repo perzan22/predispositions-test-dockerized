@@ -1,4 +1,12 @@
+////////////////////
+// RODO COMPONENT //
+////////////////////
+
+// imports
+
 import { Component } from '@angular/core';
+
+// component declaration
 
 @Component({
   selector: 'app-rodo',

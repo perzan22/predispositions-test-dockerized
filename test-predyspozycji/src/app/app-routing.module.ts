@@ -1,3 +1,10 @@
+////////////////////////
+// APP ROUTING MODULE //
+////////////////////////
+
+// import app components to which routes will be declared
+// guards which will accept routes
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainPageComponent } from './main-page/main-page/main-page.component';
@@ -15,7 +22,10 @@ import { SettingsComponent } from './admin/account/settings/settings.component';
 import { RodoComponent } from './rodo/rodo/rodo.component';
 import { FormAccessGuard } from './admin/auth/guards/form-access.guard';
 
-// Trasowanie Angulara
+// initialize routes to specific components
+// routes contains url path, target component and 
+// optional guards to specific url
+
 const routes: Routes = [
   { path: '', component: MainPageComponent },
   { path: 'test', component: SelectQuestionComponent },
@@ -39,6 +49,9 @@ const routes: Routes = [
   },
   { path: 'admin/login', component: LoginComponent }
 ];
+
+// module declaration exports routes to routermodule
+// which allows to manage app-flow
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

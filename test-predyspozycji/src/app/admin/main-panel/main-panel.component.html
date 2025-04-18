@@ -1,9 +1,14 @@
+<!-- HTML FILE FOR MAIN PANEL VIEW -->
+
+<!-- card is devided to menu, main view and buttons to logout -->
+
 <mat-card appearance="outlined">
     <mat-card-header>
         <mat-card-title>Panel administracyjny testu predyspozycji AMW</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
+
         <section class="menu">
             <ul>
                 <li><a [routerLink]="['/admin/pytania']" routerLinkActive="active">Pytania</a></li>
@@ -12,9 +17,11 @@
                 <li><a [routerLink]="['/admin/konto']" routerLinkActive="active">Ustawienia</a></li>
             </ul>
         </section>
+
         <section class="view">
             <router-outlet></router-outlet>
         </section>
+
     </mat-card-content>
     <mat-divider></mat-divider>
     <mat-card-actions>

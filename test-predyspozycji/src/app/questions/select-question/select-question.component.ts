@@ -1,3 +1,9 @@
+///////////////////////////////
+// SELECT QUESTION COMPONENT //
+///////////////////////////////
+
+// imports
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionService } from '../questions.service';
@@ -6,6 +12,7 @@ import { Question } from '../question.model';
 import { Answer } from '../answer.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+// component declaration
 
 @Component({
   selector: 'app-select-question',
@@ -27,50 +34,53 @@ export class SelectQuestionComponent implements OnInit {
 
   constructor(private router: Router, private questionService: QuestionService, private snackBar: MatSnackBar) {}
 
-  
-  // Funkcja uruchamiana po zainicjowaniu komponentu
+  // get questions and answers on component initialization
+
   ngOnInit(): void {
-    // Wyzerowanie pytań i odpowiedzi
     this.currentQuestionIndex = 0;
     this.candidateAnswers = [];
 
-    // Zwrócenie do serwisu pytań
+    // get questions from service
+
     this.questionService.getQuestions();
-    // Przekazanie pytań do komponentu za pomocą observable
     this.questionsSubs = this.questionService.getQuestionUpdateListener().subscribe({
-      // Wykonywane jeśli nie ma błędu
       next: questionData => {
-        // Wypełnienie tabeli questions danymi z serwisu
+
+        // get answers to actual question from service
+
         this.questions = questionData.questions
-        // Zwrócenie do serwisu odpowiedzi do pytania o indeksie currentQuestionIndex
         this.questionService.getAnswers(this.questions[this.currentQuestionIndex].id_pytania);
-        // Przekazanie odpowiedzi do komponentu za pomocą observable
         this.answersSubs = this.questionService.getAnswerUpdateListener().subscribe({
-          // Wykonane jeśli nie ma błedu
           next: answerData => {
-            // Wypełnienie tabeli answer danymi z serwisu
             this.answers = answerData.answers
           },
-          // W przypadku błedu związanego z odopowiedziami
           error: error => {
-            // Zwraca informacje o błędzie
             this.snackBar.open(error.error.message, 'OK', { duration: 3000 });
           }
         })
       },
-      // W przypadku błedu związanego z pytaniami
       error: error => {
-         // Zwraca informacje o błędzie
         this.snackBar.open(error.error.message, 'OK', { duration: 3000 });
       }
     })
   }
   
+  // method push chosen answers to answer array
+  // and load next question after answer click
 
   nextQuestion(answer: Answer) {
     if (this.currentQuestionIndex < this.questions.length - 1) {
+
+      // push chosen answer to array
+
       this.candidateAnswers.push(answer);
+
+      // increment question index
+
       this.currentQuestionIndex++;
+
+      // get answer of next question
+
       this.questionService.getAnswers(this.questions[this.currentQuestionIndex].id_pytania);
       this.answersSubs = this.questionService.getAnswerUpdateListener().subscribe({
         next: answerData => {
@@ -80,6 +90,11 @@ export class SelectQuestionComponent implements OnInit {
           this.snackBar.open(error.error.message, 'OK', { duration: 3000 });
         }
       })
+
+      // if there isnt any next question
+      // push last answer and navigate to 
+      // contact form
+
     } else {
       this.candidateAnswers.push(answer)
       this.currentQuestionIndex++;
@@ -89,8 +104,10 @@ export class SelectQuestionComponent implements OnInit {
     }
   }
 
+  // method return letter to label answers in html
+
   getLetter(index: number): string {
-    const letters = 'ABCD';
+    const letters = 'ABCDEF';
     return letters[index % letters.length]
   }
 

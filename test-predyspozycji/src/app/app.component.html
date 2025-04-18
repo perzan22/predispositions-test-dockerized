@@ -1,7 +1,18 @@
+<!-- HTML FILE FOR APP COMPONENT -->
+
 <section class="body">
+
+  <!-- header -->
+
   <app-header *ngIf="!isAdminPage()"></app-header>
+
+  <!-- main content managed by routing -->
+
   <main [ngClass]="getLayoutClass()">
     <router-outlet></router-outlet>
   </main>
+
+  <!-- footer -->
+
   <app-footer *ngIf="!isAdminPage()"></app-footer>
 </section>

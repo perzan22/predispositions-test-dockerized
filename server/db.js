@@ -1,10 +1,19 @@
-// Import potrzebnych bibliotek
+/////////////////////////////////////////////
+// DATABASE CONNECTION INITIALIZATION FILE // 
+/////////////////////////////////////////////
+
+// import pg library to handle postgres database
+
 require('dotenv').config();
 const { Pool } = require('pg');
 
-// Nowa instancja puli połaczeń
+// new instance of connection pool
+
 const db = new Pool({
-    // Konfiguracja puli połączeń zapisana jest w pliku .env
+
+    // configuration of database connection
+    // from environments variables
+
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,

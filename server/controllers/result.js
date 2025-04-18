@@ -1,14 +1,32 @@
+//////////////////////////////////////
+// CONTROLLER HANDLES HTTP REQUESTS //
+//      REFERS TO TEST RESULTS      //
+//////////////////////////////////////
+
+// import database
+
 const db = require('../db')
+
+// import functions for calculating the result
+
 const findClosestField = require('../functions/findClosestField')
 const calculatePersonality = require('../functions/calculatePersonality')
+
+// method calaculates test result based on candidate answers
 
 exports.getTestResult = async (req, res, next) => {
 
     const answers = req.body.candidateAnswers;
     console.log(answers)
 
+    // get all possible types of personality and its represantation
+    // on hexagonal model. Types are used to assign
+    // field of study to candidate
+
     const hexagonQuery = `SELECT x, y, label FROM typ_osobowosci`;
     const hexagon = await db.query(hexagonQuery);
+
+    // calculate candidate personality type
 
     const personalityPoint = calculatePersonality(answers, hexagon.rows);
 
@@ -16,6 +34,7 @@ exports.getTestResult = async (req, res, next) => {
     const result = await db.query(studyQuery);
     const kierunki = result.rows;
 
+    // assign field of study based on candidate personality type
     
     const kierunek = findClosestField(personalityPoint, kierunki)
 
@@ -24,6 +43,8 @@ exports.getTestResult = async (req, res, next) => {
         wynik: personalityPoint.x
     })
 }
+
+// method used for adding test result to database
 
 exports.addNewResult = async (req, res, next) => {
 

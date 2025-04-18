@@ -1,3 +1,7 @@
+///////////////////////////////////////////
+// ROUTES FILE TO REDIRECT MAIL REQUESTS // 
+///////////////////////////////////////////
+
 const express = require('express')
 
 const router = express.Router()

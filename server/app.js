@@ -1,9 +1,15 @@
-// Import potrzebnych bibliotek
+/////////////////////////////////////////
+// FILE CONTAINS EXPRESS API INTARFACE // 
+/////////////////////////////////////////
+
+// import libraries
+
 const express = require('express')
 const bodyParser = require('body-parser');
 const cors = require('cors')
 
-// Import plików zarządzających trasami
+// import route files
+
 const answersRoutes = require('./routes/answers')
 const questionsRoutes = require('./routes/questions')
 const resultsRoutes = require('./routes/result')
@@ -12,17 +18,22 @@ const candidatesRoutes = require('./routes/candidates')
 const authRoutes = require('./routes/auth')
 const mailRoutes = require('./routes/mail')
 
-// Utworzenie instancji aplikacji express
+// create new express instance
+
 const app = express();
 
-// Middleware CORS umożliwia dostęp z różnych domen
+// cors middleware allows different domains
+// to send requests
+
 app.use(cors());
 
-// Middleware bodyParser parsuje dane w formacie JSON i z formularzy HTML
+// bodyparser middleware parse data to json format
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 
-// Definiowanie endpointów
+// define api endpoints
+
 app.use('/api/answers/', answersRoutes)
 app.use('/api/questions/', questionsRoutes)
 app.use('/api/results/', resultsRoutes)

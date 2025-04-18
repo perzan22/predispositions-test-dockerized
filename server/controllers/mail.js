@@ -1,3 +1,11 @@
+///////////////////////////////////////
+// CONTROLLER HANDLES HTTP REQUESTS //
+// REFERS TO SENDING MAIL AND       //
+//      SMTP HANDLING               //
+//////////////////////////////////////
+
+// imports
+
 const getTestTransporter = require("../smtp");
 // const mail = require("../smtp")
 const mjml = require("mjml");
@@ -5,29 +13,32 @@ const fs = require("fs");
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 
+// method send email to candidate with his result
 
 exports.sendMail = async (req, res, next) => {
 
-    // Dane kandydata
     const { imie, nazwisko, kierunek, email } = req.body;
     
-    // Przesłanie szablonu maila z pliku .mjml
+    // read the email tamplate 
+
     const mjmlTamplate = fs.readFileSync("../server/views/email.mjml", "utf8");
 
-    // Wprowadzenie danych do szablonu
+    // put candidate data into the template
+
     const mjmlWithData = mjmlTamplate
         .replace("{{imie}}", `${imie}`)
         .replace("{{nazwisko}}", `${nazwisko}`)
         .replace("{{kierunek}}", `${kierunek}`);
 
-    // Konwersja pliku mjml na html
+    // conversion of mjml file to html file
+    
     const htmlOutput = mjml(mjmlWithData).html;
 
-    ///////////////////////////////////////////////////
-    // Wysłanie maila za pomocą serwera SMTP uczelni //
-    ///////////////////////////////////////////////////
+    ////////////////////////////////////////
+    // SEND EMAIL BY ACADEMIC SMTP SERVER //
+    ////////////////////////////////////////
 
-    // Atrybuty potrzebne do wysłania maila
+    // // data needed to send email
     // const mailOptions = {
     //     from: process.env.SMTP_USER,
     //     to: email,
@@ -36,20 +47,21 @@ exports.sendMail = async (req, res, next) => {
     // };
 
     // try {
-    //     // Funkcja wysyłająca maila
+    //     // send email
     //     await mail.sendMail(mailOptions);
     //     res.status(200).json({ message: 'E-mail wysłany!' });
     // } catch (error) {
     //     res.status(500).json({ message: 'Błąd podczas wysłania e-maila.', error });
     // }
 
-    //////////////////////////////
-    // Wysłanie testowego maila //
-    //////////////////////////////
+    ////////////////////////////////
+    // SEND EMAIL BY TEST ACCOUNT //
+    ////////////////////////////////
 
     const transporter = await getTestTransporter();
 
-    console.log(transporter)
+    // data needed to send email
+
     const mailOptions = {
         from: '"Test User" <test@example.com>',
         to: email,
@@ -58,6 +70,10 @@ exports.sendMail = async (req, res, next) => {
     };
 
     try {
+
+        // send email by test account
+        // email can be seen on getMassageUrl(info) address
+
         const info = await transporter.sendMail(mailOptions);
         //console.log('Message sent:', info.messageId);
         //console.log('Preview URL:', nodemailer.getTestMessageUrl(info));

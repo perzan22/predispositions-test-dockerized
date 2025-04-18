@@ -1,3 +1,9 @@
+////////////////////////////
+// AUTHENTICATION SERVICE //
+////////////////////////////
+
+// imports
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -5,6 +11,8 @@ import { Router } from '@angular/router';
 import { response } from 'express';
 import { CookieService } from 'ngx-cookie-service';
 import { Subject } from 'rxjs';
+
+// set service as injectable to inject class to app components
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +27,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router, private cookies: CookieService, private snackBar: MatSnackBar) { }
 
+  // getters
+
   getIsAuth() {
     return this.isAuth;
   }
@@ -26,6 +36,10 @@ export class AuthService {
   getToken() {
     return this.token;
   }
+
+  // login method send post request to log the admin in
+  // after succesfull response user is authenticated and
+  // browser cookies are set for auto authentication
 
   login(login: string, password: string) {
     const authData = { login: login, password: password };
@@ -49,6 +63,9 @@ export class AuthService {
     })
   }
 
+  // function logout user by setting auth variables to false 
+  // and clearing cookies
+
   logout() {
     this.authStatusListener.next({ isAuth: false });
     this.isAuth = false;
@@ -59,15 +76,21 @@ export class AuthService {
     this.router.navigate(['/admin/login']);
   }
 
+  // function set cookies for auto auth
+
   private setCookies() {
     this.cookies.set('SESSION_TOKEN', this.token, 1, '/admin');
     this.cookies.set('USER_LOGIN', this.userLogin, 1, '/admin');
     this.cookies.set('USER_ID', this.adminID, 1, '/admin');
   }
 
+  // function clear cookies
+
   private clearCookies() {  
     this.cookies.deleteAll('/admin');
   }
+
+  // function retuirns cookies data
 
   private getCookiesData() {
     const token = this.cookies.get('SESSION_TOKEN');
@@ -85,6 +108,8 @@ export class AuthService {
     }
   }
 
+  // function automatically authenticates user based on cookies
+
   autoAuth() {
     const authInfo = this.getCookiesData();
     if (!authInfo) {
@@ -97,6 +122,8 @@ export class AuthService {
     this.isAuth = true;
     this.authStatusListener.next({ isAuth: true });
   }
+
+  // method send PATCH request to update admin password
 
   changePassword(actualPass: string, newPass: string) {
     const changeData = {
@@ -114,6 +141,8 @@ export class AuthService {
       }
     })
   }
+
+  // method sends POST request to add new admin
 
   addNewAdmin(login: string, password: string) {
 

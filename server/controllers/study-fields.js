@@ -1,4 +1,13 @@
+//////////////////////////////////////
+// CONTROLLER HANDLES HTTP REQUESTS //
+//    REFERS TO FIELDS OF STUDY     //
+//////////////////////////////////////
+
+// import database
+
 const db = require('../db')
+
+// method returns all study fields from database
 
 exports.getStudyFields = async (req, res, next) => {
     const query = `SELECT * FROM kierunek`;
@@ -12,6 +21,8 @@ exports.getStudyFields = async (req, res, next) => {
         res.status(404).json({ message: 'Nie znaleziono kierunków' })
     }
 }
+
+// method returns specific field of study based on id
 
 exports.getStudyField = async (req, res, next) => {
     const id_kierunku = req.query.id_kierunku
@@ -30,6 +41,8 @@ exports.getStudyField = async (req, res, next) => {
         res.status(404).json({ message: 'Nie znaleziono kierunku' })
     }
 }
+
+// mathod adds new field of study to database
 
 exports.addStudyField = async (req, res, next) => {
     const studyField = {
@@ -54,10 +67,10 @@ exports.addStudyField = async (req, res, next) => {
     }
 }
 
-// Funkcja PATCH zmieniająca 
+// method used for updating field of study in database
+
 exports.editStudyField = async (req, res, next) => {
 
-    // Przekazanie danych w ciele i parametrach żądania
     const studyField = {
         id_kierunku: req.query.id_kierunku,
         nazwa: req.body.nazwa,
@@ -66,48 +79,38 @@ exports.editStudyField = async (req, res, next) => {
         y: +req.body.y
     };
 
-    // Polecenie UPDATE edytuje kierunek o podanym id_kierunku
     const query = `UPDATE kierunek SET nazwa = $1, wydzial = $2, x = $3, y = $4 WHERE id_kierunku = $5`
     const values = [studyField.nazwa, studyField.wydzial, studyField.x, studyField.y, studyField.id_kierunku];
 
-    // Konmstrukcja do obsługi błedów
     try {
-        // Wykonanie polecenia
         const result = await db.query(query, values);
 
-        // Powodzenie polecenia zwraca edytowany kierunek i informacje
         res.status(201).json({
             message: 'Kierunek edytowany pomyślnie!',
             studyField: result.rows[0],
         });
     } catch (error) {
-        // W przypadku błedu zwracana informacja o błędzie
         console.error('Błąd podczas edytowania kierunku:', error);
         res.status(500).json({ error: 'Błąd serwera' });
     }
 }
 
-// Funkcja DELETE usuwająca kierunek studiów z bazy danych
+// method used for deleting study field from database
+
 exports.deleteStudyField = async (req, res, next) => {
-    // id kierunku otrzymuje się z parametru zapytania
     const studyFieldID = req.query.id_kierunku
 
-    // Usuniecie kierunku za pomocą polecenia DELETE SQL
     const query = `DELETE FROM kierunek WHERE id_kierunku = $1`;
     const values = [studyFieldID]
 
-    // Konstrukcja do obsługi błedów
     try {
-        // Wykonanie polecenia
         const result = await db.query(query, values);
 
-        // Powodzenie zapytania zwraca usunięty kierunek i informacje
         res.status(201).json({
             message: 'Kierunek usunięty pomyślnie!',
             studyField: result.rows[0],
         });
     } catch (error) {
-        // W przypadku błedu zwracana jest informacja o błędzie
         console.error('Błąd podczas usuwania kierunku:', error);
         res.status(500).json({ error: 'Błąd serwera' });
     }

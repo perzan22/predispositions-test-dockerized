@@ -1,4 +1,13 @@
+////////////////////////////////////////////
+// CONTROLLER HANDLES HTTP REQUESTS       //
+// REFERS TO CANDIDATES WHO FINISHED TEST //
+////////////////////////////////////////////
+
+// import database
+
 const db = require('../db')
+
+// method adds new candidate to database
 
 exports.createCandidate = async (req, res, next) => {
 
@@ -30,6 +39,9 @@ exports.createCandidate = async (req, res, next) => {
 
 }
 
+// method returns all candidates from database and
+// fields of study assigned to each of them
+
 exports.getCandidates = async (req, res, next) => {
 
     const query = `SELECT k.imie, k.nazwisko, k.email, k.miasto, to_char(w.data, 'YYYY-MM-DD') AS data, ki.nazwa, k.id_kandydata 
@@ -53,11 +65,16 @@ exports.getCandidates = async (req, res, next) => {
     }
 }
 
+// method deletes candidate from database
+
 exports.deleteCandidate = async (req, res, next) => {
 
     const candidateID = req.query.id_kandydata;
 
     const transaction = await db.connect()
+
+    // transaction is used because before candidate remove
+    // it is needed to remove his test result from database
 
     try {
 

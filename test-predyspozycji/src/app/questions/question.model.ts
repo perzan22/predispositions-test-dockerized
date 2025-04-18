@@ -1,3 +1,6 @@
+// question model represents question
+// relation in the database
+
 export interface Question {
     id_pytania: number
     tresc: string
