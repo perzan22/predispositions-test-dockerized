@@ -54,7 +54,7 @@ password: `admin`
 :artist:**Frontend:** Angular 17  
 :gear:**Backend:** Node.js + express  
 :elephant:**Database:** PostgreSQL 17  
-:whale: **DevOps:** Docker, Docker Compose  
+:whale:**DevOps:** Docker, Docker Compose  
 :mailbox_with_mail:**Mailing:** Nodemailer  
 
 ---
@@ -77,7 +77,7 @@ Relations:
 :question: Pytanie - relation store question data: content, instruction, number of answers and type of question  
 :question: Typ_pytania - relation store question type data: name and label  
 :tada: Wynik_testu - relation store test result data: date, score, candidate who got this result and field of study calculated based on the result  
-:mortar_board: Kandydat - relation store candidate data: first name, last name, address city and email
+:mortar_board: Kandydat - relation store candidate data: first name, last name, address city and email  
 :school: Kierunek - relation store field of study data: name, department and it's position on the hexagonal model  
 :cop: Administrator - relation store administrator data: login and encrypted password  
 :information_desk_person: Typ_osobowosci - relation store personality type data: position on hexagonal model, name and label  
